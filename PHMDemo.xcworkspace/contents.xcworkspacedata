@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:UserNotifications/UserNotifications.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:ForceTouch/ForceTouch.xcodeproj">
    </FileRef>
 </Workspace>
