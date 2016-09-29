@@ -11,6 +11,7 @@
 #import <UserNotifications/UserNotifications.h>
 #import "PHMUserNotifications.h"
 @interface AppDelegate ()
+
 @end
 
 @implementation AppDelegate
@@ -20,7 +21,6 @@
     self.window.backgroundColor = [UIColor whiteColor];
     UINavigationController *rootNavigationController = [[UINavigationController alloc] initWithRootViewController:[[ViewController alloc] init]];
     rootNavigationController.navigationBar.translucent = NO;
-    [rootNavigationController.navigationBar setBarTintColor:[UIColor yellowColor]];
     self.window.rootViewController = rootNavigationController;
     [self.window makeKeyAndVisible];
     [PHMUserNotifications requestAuthorization];

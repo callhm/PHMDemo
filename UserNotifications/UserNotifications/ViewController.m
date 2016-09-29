@@ -19,11 +19,11 @@ static NSString *cellIdentifler = @"cellIdentifler";
 
 @implementation ViewController
 - (void)viewDidLoad {
-    
     [super viewDidLoad];
+    self.title = @"User Notifications";
     _userNotifications = [[PHMUserNotifications alloc] init];
     if (sysVer >= 10.0) {
-        _notifications = @[@"发送任务提醒Notification",@"已交付Notification 进行更新",@"发送可操作的Notification"];
+        _notifications = @[@"发送任务提醒Notification",@"已交付Notification 进行更新",@"发送可操作的Notification",@"发送带附件的Notification"];
     }else{
         _notifications =  @[@"用iOS 10系统进行测试"];
     }
@@ -66,7 +66,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
         case 0://发送任务提醒Notification 2秒后发送信息
         {
             NSString *userNotificationIdentifier = @"defultNotification";
-            [_userNotifications addUserNotificationCenterRequestWithIdentifier:userNotificationIdentifier withContent:[_userNotifications localNotificationContentTitle:@"任务提醒 本地推送" isActionable:NO] withTrigger:[_userNotifications timeIntervalNotificationTrigger]];
+            [_userNotifications addUserNotificationCenterRequestWithIdentifier:userNotificationIdentifier withContent:[_userNotifications localNotificationContentTitle:@"任务提醒 本地推送"] withTrigger:[_userNotifications timeIntervalNotificationTrigger]];
         }
             break;
         case 1://发送可操作的Notification 2秒后发送信息 4秒后发送信息
@@ -77,8 +77,16 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
         case 2://发送可操作的Notification 2秒后发送信息
         {
             [_userNotifications registerNotificationCategory];
+            _userNotifications.actionable = YES;
             NSString *userNotificationIdentifier = @"defultNotification";
-            [_userNotifications addUserNotificationCenterRequestWithIdentifier:userNotificationIdentifier withContent:[_userNotifications localNotificationContentTitle:@"可操作的 本地推送" isActionable:YES] withTrigger:[_userNotifications timeIntervalNotificationTrigger]];
+            [_userNotifications addUserNotificationCenterRequestWithIdentifier:userNotificationIdentifier withContent:[_userNotifications localNotificationContentTitle:@"可操作的 本地推送"] withTrigger:[_userNotifications timeIntervalNotificationTrigger]];
+        }
+            break;
+        case 3://发送带图片的Notification 2秒后发送信息
+        {
+            NSString *userNotificationIdentifier = @"defultNotification";
+            _userNotifications.addAttachment = YES;
+            [_userNotifications addUserNotificationCenterRequestWithIdentifier:userNotificationIdentifier withContent:[_userNotifications localNotificationContentTitle:@"带附件的本地推送"] withTrigger:[_userNotifications timeIntervalNotificationTrigger]];
         }
             break;
         default:

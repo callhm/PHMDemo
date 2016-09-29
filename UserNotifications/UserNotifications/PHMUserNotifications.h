@@ -10,11 +10,14 @@
 #import <UIKit/UIKit.h>
 #import <UserNotifications/UserNotifications.h>
 @interface PHMUserNotifications : NSObject<UNUserNotificationCenterDelegate>
+@property (nonatomic, assign) BOOL actionable;
+@property (nonatomic, assign) BOOL addAttachment;
+
 + (void)requestAuthorization;
 + (void)registerForRemoteNotifications;
 + (void)getNotificationSettings;
 
-- (UNMutableNotificationContent *)localNotificationContentTitle:(NSString *)title isActionable:(BOOL)actionable;
+- (UNMutableNotificationContent *)localNotificationContentTitle:(NSString *)title;
 - (UNTimeIntervalNotificationTrigger *)timeIntervalNotificationTrigger;
 - (UNCalendarNotificationTrigger *)calendarNotificationTrigger;
 - (UNLocationNotificationTrigger *)locationNotificationTrigger;

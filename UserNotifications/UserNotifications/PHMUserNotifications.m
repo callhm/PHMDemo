@@ -50,7 +50,7 @@ static NSString *const cancelActionIdentifier = @"cancelActionIdentifier";
 }
 
 //创建内容 Content 
-- (UNMutableNotificationContent *)localNotificationContentTitle:(NSString *)title isActionable:(BOOL)actionable {
+- (UNMutableNotificationContent *)localNotificationContentTitle:(NSString *)title {
     UNMutableNotificationContent *content = [[UNMutableNotificationContent alloc] init];
     content.title = title;
     content.subtitle = @"显示推送详情";
@@ -58,8 +58,19 @@ static NSString *const cancelActionIdentifier = @"cancelActionIdentifier";
     content.badge = @1;
     
     //Actionable Notifications
-    if (actionable) {
+    if (_actionable) {
         content.categoryIdentifier = categoryIdentifier;
+        _actionable = NO;
+    }
+
+    //Add Attachment
+    if (_addAttachment) {
+        NSURL *videofileURL = [[NSBundle mainBundle] URLForResource:@"video" withExtension:@"mp4"];
+        //NSURL *gitfileURL = [[NSBundle mainBundle] URLForResource:@"b" withExtension:@"gif"];
+        //NSURL *imagefileURL = [[NSBundle mainBundle] URLForResource:@"a" withExtension:@"jpg"];
+        UNNotificationAttachment *imageAttachment = [UNNotificationAttachment attachmentWithIdentifier:@"imageIdentifier" URL:videofileURL options:nil error:nil];
+        content.attachments = @[imageAttachment];
+        _addAttachment = NO;
     }
     return content;
 }
@@ -100,7 +111,7 @@ static NSString *const cancelActionIdentifier = @"cancelActionIdentifier";
 - (void)removePendingNotificationRequests{
     NSString *userNotificationIdentifier = @"request";
     //推送本地通知
-    [self addUserNotificationCenterRequestWithIdentifier:userNotificationIdentifier withContent:[self localNotificationContentTitle:@"本地推送 未交付展示 移除" isActionable:NO] withTrigger:[self timeIntervalNotificationTrigger]];
+    [self addUserNotificationCenterRequestWithIdentifier:userNotificationIdentifier withContent:[self localNotificationContentTitle:@"本地推送 未交付展示 移除"] withTrigger:[self timeIntervalNotificationTrigger]];
     
     [NSThread sleepForTimeInterval:0.0f];
     //移除
@@ -111,7 +122,7 @@ static NSString *const cancelActionIdentifier = @"cancelActionIdentifier";
 - (void)removeDeliveredNotifications {
     NSString *userNotificationIdentifier = @"request";
     //推送本地通知
-    [self addUserNotificationCenterRequestWithIdentifier:userNotificationIdentifier withContent:[self localNotificationContentTitle:@"本地推送 已交付展示 移除" isActionable:NO] withTrigger:[self timeIntervalNotificationTrigger]];
+    [self addUserNotificationCenterRequestWithIdentifier:userNotificationIdentifier withContent:[self localNotificationContentTitle:@"本地推送 已交付展示 移除"] withTrigger:[self timeIntervalNotificationTrigger]];
     
     [NSThread sleepForTimeInterval:4.0f];
     
@@ -123,13 +134,13 @@ static NSString *const cancelActionIdentifier = @"cancelActionIdentifier";
 - (void)updateNotifications {
     NSString *userNotificationIdentifier = @"updateRequest";
     //推送本地通知
-    [self addUserNotificationCenterRequestWithIdentifier:userNotificationIdentifier withContent:[self localNotificationContentTitle:@"原本地推送" isActionable:NO] withTrigger:[self timeIntervalNotificationTrigger]];
+    [self addUserNotificationCenterRequestWithIdentifier:userNotificationIdentifier withContent:[self localNotificationContentTitle:@"原本地推送"] withTrigger:[self timeIntervalNotificationTrigger]];
     
     //修改延迟事件模拟交付状态
     [NSThread sleepForTimeInterval:4.0f];
     
     //更新本地通知
-    [self addUserNotificationCenterRequestWithIdentifier:userNotificationIdentifier withContent:[self localNotificationContentTitle:@"本地推送 更新" isActionable:NO] withTrigger:[self timeIntervalNotificationTrigger]];
+    [self addUserNotificationCenterRequestWithIdentifier:userNotificationIdentifier withContent:[self localNotificationContentTitle:@"本地推送 更新"] withTrigger:[self timeIntervalNotificationTrigger]];
 }
 
 #pragma mark Actionable Notifications
