@@ -12,6 +12,7 @@
 @interface PHMUserNotifications : NSObject<UNUserNotificationCenterDelegate>
 @property (nonatomic, assign) BOOL actionable;
 @property (nonatomic, assign) BOOL addAttachment;
+@property (nonatomic, assign) BOOL contentExtension;
 
 + (void)requestAuthorization;
 + (void)registerForRemoteNotifications;

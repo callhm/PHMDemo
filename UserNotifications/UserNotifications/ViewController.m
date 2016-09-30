@@ -23,7 +23,7 @@ static NSString *cellIdentifler = @"cellIdentifler";
     self.title = @"User Notifications";
     _userNotifications = [[PHMUserNotifications alloc] init];
     if (sysVer >= 10.0) {
-        _notifications = @[@"发送任务提醒Notification",@"已交付Notification 进行更新",@"发送可操作的Notification",@"发送带附件的Notification"];
+        _notifications = @[@"发送任务提醒Notification",@"已交付Notification 进行更新",@"发送可操作的Notification",@"发送带附件的Notification", @"Notification Content Extension"];
     }else{
         _notifications =  @[@"用iOS 10系统进行测试"];
     }
@@ -87,6 +87,15 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
             NSString *userNotificationIdentifier = @"defultNotification";
             _userNotifications.addAttachment = YES;
             [_userNotifications addUserNotificationCenterRequestWithIdentifier:userNotificationIdentifier withContent:[_userNotifications localNotificationContentTitle:@"带附件的本地推送"] withTrigger:[_userNotifications timeIntervalNotificationTrigger]];
+        }
+            break;
+        case 4://Notification Content Extension 2秒后发送信息
+        {
+            [_userNotifications registerNotificationCategory];
+            _userNotifications.actionable = YES;
+            _userNotifications.contentExtension = YES;
+            NSString *userNotificationIdentifier = @"defultNotification";
+            [_userNotifications addUserNotificationCenterRequestWithIdentifier:userNotificationIdentifier withContent:[_userNotifications localNotificationContentTitle:@"本地推送"] withTrigger:[_userNotifications timeIntervalNotificationTrigger]];
         }
             break;
         default:

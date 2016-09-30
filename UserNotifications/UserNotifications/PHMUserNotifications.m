@@ -8,7 +8,8 @@
 
 #import "PHMUserNotifications.h"
 
-static NSString *const categoryIdentifier = @"categoryIdentifier";
+static NSString *const categoryIdentifier = @"ONotificationCategory";
+static NSString *const notificationCategory = @"ONotificationCategory";
 
 static NSString *const textInputActionIdentifier = @"textInputActionIdentifier";
 static NSString *const normalActionIdentifier = @"normalActionIdentifier";
@@ -71,6 +72,12 @@ static NSString *const cancelActionIdentifier = @"cancelActionIdentifier";
         UNNotificationAttachment *imageAttachment = [UNNotificationAttachment attachmentWithIdentifier:@"imageIdentifier" URL:videofileURL options:nil error:nil];
         content.attachments = @[imageAttachment];
         _addAttachment = NO;
+    }
+    
+    //Content Extension
+    if (_contentExtension) {
+        content.categoryIdentifier = notificationCategory;
+        _contentExtension = NO;
     }
     return content;
 }
